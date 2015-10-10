@@ -1,13 +1,13 @@
 module Xinge
   class Logger
 
-    def info
+    def info(msg)
     end
 
-    def debug
+    def debug(msg)
     end
 
-    def error
+    def error(msg)
     end
 
   end
