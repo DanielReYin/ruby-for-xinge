@@ -1,11 +1,21 @@
 require 'httparty'
 require 'digest'
+require 'xinge/logger'
 
 module Xinge
 
   @xinge_config = {env: 'development'}
+  @logger = Xinge::Logger.new
 
   class << self
+    def logger=(logger)
+      @logger = logger
+    end
+
+    def logger
+      @logger
+    end
+
     def configure
       yield @xinge_config if block_given?
     end
@@ -16,8 +26,8 @@ module Xinge
 
   class Base
     include HTTParty
-    base_uri  'http://openapi.xg.qq.com'    	
-    
+    base_uri  'http://openapi.xg.qq.com'
+
     DEFAULT_OPTIONS = {
       api_version: 'v2'
     }
@@ -140,11 +150,17 @@ module Xinge
       #sign params
       params_string = params.sort.map{ |h| h.join('=') }.join
       sign = Digest::MD5.hexdigest("#{HTTP_METHOD.to_s.upcase}#{HOST}#{self.get_request_url(type,method)}#{params_string}#{@secretKey}")
-      
+
       params.merge!({ sign: sign })
       options = { body: params }
-      
-      result = JSON.parse(self.class.send(HTTP_METHOD,self.get_request_url(type,method), options))
+
+      request_url = self.get_request_url(type, method)
+      Xinge.logger.info "REQ URL: #{request_url}"
+
+      response_txt = self.class.send(HTTP_METHOD, request_url, options)
+      Xinge.logger.info "Response TXT #{response_txt}"
+
+      result = JSON.parse(response_txt)
 
       [result["ret_code"], result["err_msg"]]
     end
@@ -160,4 +176,3 @@ module Xinge
   end
 
 end
-
