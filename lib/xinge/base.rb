@@ -149,6 +149,7 @@ module Xinge
                      timestamp: Time.now.to_i})
       #sign params
       params_string = params.sort.map{ |h| h.join('=') }.join
+      Xinge.logger.info "REQ PARAMS: #{params_string}"
       sign = Digest::MD5.hexdigest("#{HTTP_METHOD.to_s.upcase}#{HOST}#{self.get_request_url(type,method)}#{params_string}#{@secretKey}")
 
       params.merge!({ sign: sign })

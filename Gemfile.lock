@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-for-xinge (0.1.4)
+    ruby-for-xinge (0.1.6)
 
 GEM
   remote: https://rubygems.org/
@@ -36,3 +36,6 @@ DEPENDENCIES
   rake (~> 10.0)
   rspec
   ruby-for-xinge!
+
+BUNDLED WITH
+   1.10.6
