@@ -161,7 +161,7 @@ module Xinge
       response_txt = self.class.send(HTTP_METHOD, request_url, options)
       Xinge.logger.info "Response TXT #{response_txt}"
 
-      result = JSON.parse(response_txt)
+      result = JSON.parse(response_txt.to_s.gsub(/\\r\\n/, ''))
 
       [result["ret_code"], result["err_msg"]]
     end
