@@ -154,7 +154,7 @@ module Xinge
       sign = Digest::MD5.hexdigest("#{HTTP_METHOD.to_s.upcase}#{HOST}#{self.get_request_url(type,method)}#{params_string}#{@secretKey}")
 
       params.merge!({ sign: sign })
-      options = { body: params.keys.inject({}) {|e, k| e[k] = URI.encode(params[k]); e} }
+      options = { body: params.keys.inject({}) {|e, k| e[k] = URI.encode(params[k].to_s); e} }
 
       request_url = self.get_request_url(type, method)
       Xinge.logger.info "REQ URL: #{request_url}"
