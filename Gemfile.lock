@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-for-xinge (0.1.8)
+    ruby-for-xinge (0.1.9)
 
 GEM
   remote: https://rubygems.org/

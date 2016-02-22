@@ -147,14 +147,13 @@ module Xinge
     def send_request(type,method,params = {})
       params.merge!({access_id: @accessId,
                      timestamp: Time.now.to_i})
-
       #sign params
       params_string = params.sort.map{ |h| h.join('=') }.join
       Xinge.logger.info "REQ PARAMS: #{params_string}"
       sign = Digest::MD5.hexdigest("#{HTTP_METHOD.to_s.upcase}#{HOST}#{self.get_request_url(type,method)}#{params_string}#{@secretKey}")
 
       params.merge!({ sign: sign })
-      options = { body: params.keys.inject({}) {|e, k| e[k] = URI.encode(params[k].to_s); e} }
+      options = { body: params }
 
       request_url = self.get_request_url(type, method)
       Xinge.logger.info "REQ URL: #{request_url}"
