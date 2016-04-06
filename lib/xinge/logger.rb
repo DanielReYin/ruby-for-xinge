@@ -1,14 +1,18 @@
+require 'logger'
+
 module Xinge
-  class Logger
+  class Logging
 
-    def info(msg)
+    def initialize(log_target = STDOUT)
+      @logger = Logger.new(log_target)
+      @logger.level = Logger::INFO
+      @logger
     end
 
-    def debug(msg)
+    def logger
+      @logger
     end
 
-    def error(msg)
-    end
 
   end
 end

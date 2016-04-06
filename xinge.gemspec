@@ -6,8 +6,8 @@ require 'xinge/version'
 Gem::Specification.new do |spec|
   spec.name          = "ruby-for-xinge"
   spec.version       = Xinge::VERSION
-  spec.authors       = ["Robot Jiang"]
-  spec.email         = ["robot.z.jiang@gmail.com"]
+  spec.authors       = ["ReYin Dev Team"]
+  spec.email         = ["rdteam@reyinapp.com"]
 
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = "https://rubygems.org"
@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{A Ruby portal for Tencent Xinge}
   spec.description   = %q{腾讯 信鸽 Rest API for Ruby}
-  spec.homepage      = "https://github.com/RobotJiang/ruby-for-xinge"
+  spec.homepage      = "https://github.com/DanielReYin/ruby-for-xinge"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

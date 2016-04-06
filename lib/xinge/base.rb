@@ -5,15 +5,11 @@ require 'xinge/logger'
 module Xinge
 
   @xinge_config = {env: 'development'}
-  @logger = Xinge::Logger.new
 
   class << self
-    def logger=(logger)
-      @logger = logger
-    end
 
     def logger
-      @logger
+      @@logger = defined?(@@logger) ? @@logger : (config[:logger].nil? ? Xinge::Logging.new.logger : config[:logger])
     end
 
     def configure
@@ -149,19 +145,18 @@ module Xinge
                      timestamp: Time.now.to_i})
       #sign params
       params_string = params.sort.map{ |h| h.join('=') }.join
-      Xinge.logger.info "REQ PARAMS: #{params_string}"
       sign = Digest::MD5.hexdigest("#{HTTP_METHOD.to_s.upcase}#{HOST}#{self.get_request_url(type,method)}#{params_string}#{@secretKey}")
 
       params.merge!({ sign: sign })
       options = { body: params }
 
       request_url = self.get_request_url(type, method)
-      Xinge.logger.info "REQ URL: #{request_url}"
-
       response_txt = self.class.send(HTTP_METHOD, request_url, options)
-      Xinge.logger.info "Response TXT #{response_txt}"
-
-      result = JSON.parse(response_txt.to_s.gsub(/\\r\\n/, ''))
+      begin
+        result = JSON.parse(response_txt.to_s.gsub(/\\r\\n/, ''))
+      rescue => e
+        Xinge.logger.error "REQ URL: #{request_url} \n #{e} \n #{response_txt}"
+      end
 
       [result["ret_code"], result["err_msg"]]
     end
