@@ -35,7 +35,7 @@ describe Xinge do
   end
 
   it 'can push a more than one device' do
-    expect(Xinge::Notification.instance.ios.pushToMultiDevices(@ios_device_tokens, '关注了你。', '操蛋子', {}, {OPEN_CONCERT_ID_KEY: 4037})['ret_code']).to eq(0)
+    expect(Xinge::Notification.instance.ios.pushToMultiDevices(@ios_device_tokens, '关注了你。', '操蛋子1123123', {}, {OPEN_CONCERT_ID_KEY: 4037})['ret_code']).to eq(0)
   end
 
   #it 'can send message to all ios device' do
