@@ -154,11 +154,12 @@ module Xinge
       response_txt = self.class.send(HTTP_METHOD, request_url, options)
       begin
         result = JSON.parse(response_txt.to_s.gsub(/\\r\\n/, ''))
+        [result["ret_code"], result["err_msg"]]
       rescue => e
         Xinge.logger.error "REQ URL: #{request_url} \n #{e} \n #{response_txt}"
+        response_txt
       end
 
-      [result["ret_code"], result["err_msg"]]
     end
 
     def get_request_url(type,method)
