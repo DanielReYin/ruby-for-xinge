@@ -23,14 +23,19 @@ describe Xinge do
           'Xinge_Title',
           'Xinge😬_测试内容：演唱会，有小伙伴发现场直击啦，快来围观现场的感动，一起加入，假装在现场演唱会，有小伙伴发现场直击啦，快来围观现场的感动，一起加入，假装在现场',
           {},
-          {OPEN_CONCERT_ID_KEY: 4037})
-        ).to eq([0, nil])
+          {OPEN_CONCERT_ID_KEY: 4037})['ret_code']
+        ).to eq(0)
     end
+    puts Xinge.config
 
     @ios_device_tokens.each do |token|
-      expect(Xinge::Notification.instance.ios.pushToSingleDevice(token, '关注了你。', '操蛋子', {}, {OPEN_CONCERT_ID_KEY: 4037})).to eq([0, nil])
+      expect(Xinge::Notification.instance.ios.pushToSingleDevice(token, '关注了你。', '操蛋子', {}, {OPEN_CONCERT_ID_KEY: 4037})['ret_code']).to eq(0)
     end
 
+  end
+
+  it 'can push a more than one device' do
+    expect(Xinge::Notification.instance.ios.pushToMultiDevices(@ios_device_tokens, '关注了你。', '操蛋子', {}, {OPEN_CONCERT_ID_KEY: 4037})['ret_code']).to eq(0)
   end
 
   #it 'can send message to all ios device' do

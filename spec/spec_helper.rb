@@ -8,5 +8,6 @@ Xinge.configure do |config|
   config[:android_secretKey] = ENV['XINGE_ANDROID_SECRETKEY']
   config[:ios_accessId]      = ENV['IOS_ACCESSID']
   config[:ios_secretKey]     = ENV['IOS_SECRETKEY']
+  config[:env] = 'production'
   config[:logger] = Logger.new(STDOUT)
 end

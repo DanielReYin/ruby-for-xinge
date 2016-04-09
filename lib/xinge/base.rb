@@ -49,6 +49,24 @@ module Xinge
       self.send_request('push','single_device',params)
     end
 
+    # push到多个设备
+    def push_multi_device(device_list, message_type, message, params = {})
+      params1 = params.merge({
+        message:      message,
+        message_type: message_type
+        })
+      result = self.send_request('push','create_multipush', params1)
+      raise result.to_s if result['ret_code'] != 0
+
+      push_id = result['result']['push_id']
+      params.merge!({
+        device_list:  device_list.to_json,
+        push_id:      push_id
+      })
+
+      self.send_request('push', 'device_list_multiple', params)
+    end
+
     #push消息（包括通知和透传消息）给单个账户或别名
     def push_single_account(account, message_type, message, params = {})
       params.merge!({
@@ -153,8 +171,7 @@ module Xinge
       request_url = self.get_request_url(type, method)
       response_txt = self.class.send(HTTP_METHOD, request_url, options)
       begin
-        result = JSON.parse(response_txt.to_s.gsub(/\\r\\n/, ''))
-        [result["ret_code"], result["err_msg"]]
+        JSON.parse(response_txt.to_s.gsub(/\\r\\n/, ''))
       rescue => e
         Xinge.logger.error "REQ URL: #{request_url} \n #{e} \n #{response_txt}"
         response_txt
