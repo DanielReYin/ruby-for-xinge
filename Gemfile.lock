@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-for-xinge (0.1.13)
+    xinge-for-ruby (0.1.14)
 
 GEM
   remote: https://ruby.taobao.org/
@@ -35,7 +35,7 @@ DEPENDENCIES
   httparty (~> 0.13.3)
   rake (~> 10.0)
   rspec
-  ruby-for-xinge!
+  xinge-for-ruby!
 
 BUNDLED WITH
    1.11.2
