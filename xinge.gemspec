@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'xinge/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ruby-for-xinge"
+  spec.name          = "xinge-for-ruby"
   spec.version       = Xinge::VERSION
   spec.authors       = ["ReYin Dev Team"]
   spec.email         = ["rdteam@reyinapp.com"]
