@@ -169,12 +169,13 @@ module Xinge
       options = { body: params }
 
       request_url = self.get_request_url(type, method)
-      response_txt = self.class.send(HTTP_METHOD, request_url, options)
       begin
+        response_txt = self.class.send(HTTP_METHOD, request_url, options)
         JSON.parse(response_txt.to_s.gsub(/\\r\\n/, ''))
-      rescue => e
-        Xinge.logger.error "REQ URL: #{request_url} \n #{e} \n #{response_txt}"
-        response_txt
+      rescue Errno::ETIMEDOUT => e
+        {ret_code: -1, err_msg: "call restful timeout"}
+      rescue Exception => e
+        {ret_code: -1, err_msg: "call restful error: #{e}"}
       end
 
     end
